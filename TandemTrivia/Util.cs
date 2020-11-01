@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TandemTrivia
 {
@@ -55,6 +56,14 @@ namespace TandemTrivia
         {
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
+        }
+
+        public static string GetProgressBarText(int progressIndex, int progressTotal)
+        {
+            return "["
+                + new string('#', progressIndex * 6)
+                + new string(' ', (progressTotal - progressIndex) * 6)
+                + "]";
         }
     }
 }

@@ -23,45 +23,13 @@ namespace TandemTrivia
             }
             var questions = TriviaQuestion.LoadFromFile();
             Util.Shuffle(questions);
-            var round = questions.Take(10).ToList();
+            var roundQuestions = questions.Take(10).ToList();
 
-            for (int questionIndex = 0; questionIndex < round.Count; questionIndex++)
+            for (int questionIndex = 0; questionIndex < roundQuestions.Count; questionIndex++)
             {
                 foreach (var player in players)
                 {
-                    var question = round[questionIndex];
-                    Console.Clear();
-                    Console.Write("[");
-                    Console.Write(new string('#', questionIndex * 6));
-                    Console.Write(new string(' ', (round.Count - questionIndex) * 6));
-                    Console.WriteLine("]");
-                    if (players.Count > 1)
-                    {
-                        Console.WriteLine($"It's {player.Name}'s turn now");
-                    }
-                    Console.WriteLine($"You are on Question {questionIndex + 1} out of {round.Count}");
-                    Console.WriteLine(question.Question);
-                    var multipleChoiceAnswers = new List<string>();
-                    multipleChoiceAnswers.AddRange(question.Incorrect);
-                    multipleChoiceAnswers.Add(question.Correct);
-                    Util.Shuffle(multipleChoiceAnswers);
-
-                    var userAnswer = Util.ReadAnswer(multipleChoiceAnswers);
-                    if (!userAnswer.HasValue)
-                    {
-                        return;
-                    }
-                    if (multipleChoiceAnswers[userAnswer.Value - 1] == question.Correct)
-                    {
-                        Console.WriteLine("Correct");
-                        player.Score++;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Incorrect! {question.Correct} was the correct answer");
-                    }
-
-                    Util.PromptContinue();
+                    RunQuestion(roundQuestions[questionIndex], questionIndex, roundQuestions.Count, player, players.Count > 1);
                 }
             }
 
@@ -101,6 +69,39 @@ namespace TandemTrivia
                 players[i].Name = playerName;
             }
             return players;
+        }
+
+        private static void RunQuestion(TriviaQuestion question, int questionIndex, int questionCount, Player player, bool multiplayer)
+        {
+            Console.Clear();
+            Console.WriteLine(Util.GetProgressBarText(questionIndex, questionCount));
+            if (multiplayer)
+            {
+                Console.WriteLine($"It's {player.Name}'s turn now");
+            }
+            Console.WriteLine($"You are on Question {questionIndex + 1} out of {questionCount}");
+            Console.WriteLine(question.Question);
+            var multipleChoiceAnswers = new List<string>();
+            multipleChoiceAnswers.AddRange(question.Incorrect);
+            multipleChoiceAnswers.Add(question.Correct);
+            Util.Shuffle(multipleChoiceAnswers);
+
+            var userAnswer = Util.ReadAnswer(multipleChoiceAnswers);
+            if (!userAnswer.HasValue)
+            {
+                return;
+            }
+            if (multipleChoiceAnswers[userAnswer.Value - 1] == question.Correct)
+            {
+                Console.WriteLine("Correct");
+                player.Score++;
+            }
+            else
+            {
+                Console.WriteLine($"Incorrect! {question.Correct} was the correct answer");
+            }
+
+            Util.PromptContinue();
         }
 
         private static void UpdateSessionDetails(List<Player> players)
