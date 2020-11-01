@@ -8,6 +8,9 @@ namespace TandemTrivia
     {
         public static void RunGame()
         {
+            Console.WriteLine("Enter your name:");
+            var playerName = Console.ReadLine();
+
             var questions = TriviaQuestion.LoadFromFile(AppDomain.CurrentDomain.BaseDirectory + "\\" + "Apprentice_TandemFor400_Data.json");
             Util.Shuffle(questions);
             var round = questions.Take(10).ToList();
@@ -45,6 +48,9 @@ namespace TandemTrivia
 
                 Util.PromptContinue();
             }
+
+            Statistics.SessionDetails.DetailsByUser.TryAdd(playerName, new List<UserSessionDetails>());
+            Statistics.SessionDetails.DetailsByUser[playerName].Add(new UserSessionDetails { Time = DateTime.Now, Score = score });
 
             Console.Clear();
             Console.WriteLine($"You have finished a round of trivia. Your score is {score} out of 10");
