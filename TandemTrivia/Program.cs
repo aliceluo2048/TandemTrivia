@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TandemTrivia
 {
@@ -8,42 +7,25 @@ namespace TandemTrivia
     {
         public static void Main(string[] args)
         {
-            var questions = TriviaQuestion.LoadFromFile(AppDomain.CurrentDomain.BaseDirectory + "\\" + "Apprentice_TandemFor400_Data.json");
-            Util.Shuffle(questions);
-            var round = questions.Take(10).ToList();
-            int score = 0;
-
-            foreach (TriviaQuestion question in round)
+            while (true)
             {
-                Console.WriteLine(question.Question);
-                var multipleChoiceAnswers = new List<string>();
-                multipleChoiceAnswers.AddRange(question.Incorrect);
-                multipleChoiceAnswers.Add(question.Correct);
-                Util.Shuffle(multipleChoiceAnswers);
-
-                for (int i = 0; i < multipleChoiceAnswers.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}" + " " + $"{multipleChoiceAnswers[i]}");
-                }
-
-                var userAnswer = Util.ReadAnswer();
-
-                if (multipleChoiceAnswers[int.Parse(userAnswer) - 1] == question.Correct)
-                {
-                    Console.WriteLine("Correct");
-                    score++;
-                }
-                else
-                {
-                    Console.WriteLine($"Incorrect! {question.Correct} was the correct answer");
-                }
-
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey();
                 Console.Clear();
-            }
+                var menuOptions = new List<string>
+                {
+                    "New Game",
+                    "Help",
+                    "Leaderboard"
+                };
 
-            Console.WriteLine($"You have finished a round of trivia. Your score is {score} out of 10");
+                Console.WriteLine("Welcome to the Tandem Trivia Training app!");
+                Console.WriteLine("Please select the following options:");
+                Util.PrintOptions(menuOptions);
+                int userResponse = Util.ReadAnswer(menuOptions.Count);
+                if (userResponse == 1)
+                {
+                    TriviaGame.RunGame();
+                }
+            }
         }
     }
 }

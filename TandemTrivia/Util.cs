@@ -5,23 +5,31 @@ namespace TandemTrivia
 {
     public static class Util
     {
-        public static bool IsValidAnswer(string userAnswer)
+        public static void PrintOptions(List<string> options)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}" + " " + $"{options[i]}");
+            }
+        }
+
+        public static bool IsValidAnswer(string userAnswer, int optionsCount)
         {
             int number;
             bool success = Int32.TryParse(userAnswer, out number);
-            return success && number >= 1 && number <= 4;
+            return success && number >= 1 && number <= optionsCount;
         }
 
-        public static string ReadAnswer()
+        public static int ReadAnswer(int optionsCount)
         {
             var userAnswer = Console.ReadLine();
-            while (!IsValidAnswer(userAnswer))
+            while (!IsValidAnswer(userAnswer, optionsCount))
             {
-                Console.WriteLine("Please enter a valid answer. It should be between 1 - 4");
+                Console.WriteLine($"Please enter a valid response. It should be between 1 - {optionsCount}");
                 userAnswer = Console.ReadLine();
             }
 
-            return userAnswer;
+            return int.Parse(userAnswer);
         }
 
         // Fisher-Yates shuffle code from https://developerslogblog.wordpress.com/2020/02/04/how-to-shuffle-an-array/
@@ -35,6 +43,12 @@ namespace TandemTrivia
                 list[i] = list[randomIndex];
                 list[randomIndex] = temp;
             }
+        }
+
+        public static void PromptContinue()
+        {
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
         }
     }
 }
