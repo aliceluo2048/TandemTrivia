@@ -22,10 +22,12 @@ namespace TandemTrivia
                 multipleChoiceAnswers.Add(question.Correct);
                 Util.Shuffle(multipleChoiceAnswers);
 
-                Util.PrintOptions(multipleChoiceAnswers);
-                var userAnswer = Util.ReadAnswer(multipleChoiceAnswers.Count);
-
-                if (multipleChoiceAnswers[userAnswer - 1] == question.Correct)
+                var userAnswer = Util.ReadAnswer(multipleChoiceAnswers);
+                if (!userAnswer.HasValue)
+                {
+                    return;
+                }
+                if (multipleChoiceAnswers[userAnswer.Value - 1] == question.Correct)
                 {
                     Console.WriteLine("Correct");
                     score++;

@@ -18,10 +18,12 @@ namespace TandemTrivia
                 };
 
                 Console.WriteLine("Welcome to the Tandem Trivia Training app!");
-                Console.WriteLine("Please select the following options:");
-                Util.PrintOptions(menuOptions);
-                int userResponse = Util.ReadAnswer(menuOptions.Count);
-                if (userResponse == 1)
+                var userResponse = Util.ReadAnswer(menuOptions);
+                if (!userResponse.HasValue)
+                {
+                    return;
+                }
+                if (userResponse.Value == 1)
                 {
                     TriviaGame.RunGame();
                 }
