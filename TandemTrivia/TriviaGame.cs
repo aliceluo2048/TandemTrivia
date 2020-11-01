@@ -59,7 +59,7 @@ namespace TandemTrivia
                 string playerName;
                 while (true)
                 {
-                    playerName = Console.ReadLine();
+                    playerName = Console.ReadLine().ToUpper();
                     if (!String.IsNullOrWhiteSpace(playerName))
                     {
                         break;
