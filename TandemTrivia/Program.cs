@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TandemTrivia
 {
@@ -8,18 +9,8 @@ namespace TandemTrivia
         public static void Main(string[] args)
         {
             var questions = TriviaQuestion.LoadFromFile(AppDomain.CurrentDomain.BaseDirectory + "\\" + "Apprentice_TandemFor400_Data.json");
-
-            // creates a round 
-            var round = new List<TriviaQuestion>();
-            // to do filter valid questions first
-            // to do shuffle
-            for (int i = 0; i < 10; i++)
-            {
-                round.Add(questions[i]);
-            }
-
-            Shuffle(round);
-
+            Shuffle(questions);
+            var round = questions.Take(10).ToList();
             int score = 0; 
 
             foreach (TriviaQuestion question in round)
@@ -55,7 +46,7 @@ namespace TandemTrivia
             Console.WriteLine($"You have finished a round of trivia. Your score is {score} out of 10");
         }
 
-        static bool IsValidAnswer (string userAnswer)
+        static bool IsValidAnswer(string userAnswer)
         {
             int number;
             bool success = Int32.TryParse(userAnswer, out number);
