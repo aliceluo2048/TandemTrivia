@@ -21,7 +21,8 @@ namespace TandemTrivia
 
             foreach (var stats in statsByUser)
             {
-                Console.WriteLine(stats.Name + " has an average score of " + stats.AverageScore.ToString("F2") + " over " + stats.SessionCount + " round(s)");
+                var averageScore = stats.AverageScore.ToString("F2");
+                Console.WriteLine($"{stats.Name} has an average score of {averageScore} over {stats.SessionCount} round(s)");
             }
 
             Util.PromptContinue();

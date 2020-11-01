@@ -16,11 +16,21 @@ namespace TandemTrivia
         [JsonProperty("correct")]
         public string Correct { get; set; }
 
+        private int CountUniqueAnswers()
+        {
+            var answers = new HashSet<string>();
+            foreach(var answer in Incorrect)
+            {
+                answers.Add(answer);
+            }
+            answers.Add(Correct);
+            return answers.Count;
+        }
+
         public static List<TriviaQuestion> LoadFromFile()
         {
-            // TODO: Validate that all four choices are unique
             return JsonConvert.DeserializeObject<List<TriviaQuestion>>(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\Apprentice_TandemFor400_Data.json"))
-                .Where(question => question.Incorrect.Count == 3)
+                .Where(question => question.CountUniqueAnswers() == 4)
                 .ToList();
         }
     }

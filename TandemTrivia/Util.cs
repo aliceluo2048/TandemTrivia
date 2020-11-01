@@ -9,6 +9,7 @@ namespace TandemTrivia
         {
             int number;
             bool success = Int32.TryParse(userAnswer, out number);
+
             return success && number >= 1 && number <= optionsCount;
         }
 
@@ -18,19 +19,23 @@ namespace TandemTrivia
             {
                 Console.WriteLine($"{i + 1}. {options[i]}");
             }
+
             while (true)
             {
                 Console.WriteLine($"Please enter a response between 1 - {options.Count} or uppercase Q to quit");
                 var userAnswer = Console.ReadLine();
+
                 if (userAnswer == "Q")
                 {
                     Console.WriteLine("Are you sure you want to quit? Confirm with uppercase Q");
                     userAnswer = Console.ReadLine();
+
                     if (userAnswer == "Q")
                     {
                         return null;
                     }
                 }
+
                 if (IsValidAnswer(userAnswer, options.Count))
                 {
                     return int.Parse(userAnswer);
@@ -42,6 +47,7 @@ namespace TandemTrivia
         public static void Shuffle<T>(List<T> list)
         {
             var random = new Random();
+
             for (int i = list.Count - 1; i > 0; i--)
             {
                 int randomIndex = random.Next(0, i + 1);
