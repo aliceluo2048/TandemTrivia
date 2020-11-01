@@ -15,8 +15,7 @@ namespace TandemTrivia
                 var menuOptions = new List<string>
                 {
                     "New Game",
-                    "Stats",
-                    "Help"
+                    "Stats"
                 };
 
                 Console.WriteLine("Welcome to the Tandem Trivia Training app!");
@@ -29,7 +28,7 @@ namespace TandemTrivia
                 {
                     TriviaGame.RunGame();
                 }
-                if (userResponse.Value == 2)
+                else if (userResponse.Value == 2)
                 {
                     Statistics.DisplayStats();
                 }
