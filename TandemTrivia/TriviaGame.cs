@@ -8,10 +8,20 @@ namespace TandemTrivia
     {
         public static void RunGame()
         {
+            Console.Clear();
+            var playerName = "";
             Console.WriteLine("Enter your name:");
-            var playerName = Console.ReadLine();
+            while (true)
+            {
+                playerName = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(playerName))
+                {
+                    break;
+                }
+                Console.WriteLine("Please enter a valid name");
+            }
 
-            var questions = TriviaQuestion.LoadFromFile(AppDomain.CurrentDomain.BaseDirectory + "\\" + "Apprentice_TandemFor400_Data.json");
+            var questions = TriviaQuestion.LoadFromFile();
             Util.Shuffle(questions);
             var round = questions.Take(10).ToList();
             int score = 0;
