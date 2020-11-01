@@ -16,7 +16,7 @@ namespace TandemTrivia
         {
             for (int i = 0; i < options.Count; i++)
             {
-                Console.WriteLine($"{i + 1}" + " " + $"{options[i]}");
+                Console.WriteLine($"{i + 1}. {options[i]}");
             }
             while (true)
             {
@@ -24,7 +24,12 @@ namespace TandemTrivia
                 var userAnswer = Console.ReadLine();
                 if (userAnswer == "Q")
                 {
-                    return null;
+                    Console.WriteLine("Are you sure you want to quit? Confirm with uppercase Q");
+                    userAnswer = Console.ReadLine();
+                    if (userAnswer == "Q")
+                    {
+                        return null;
+                    }
                 }
                 if (IsValidAnswer(userAnswer, options.Count))
                 {

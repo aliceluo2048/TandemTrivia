@@ -13,9 +13,15 @@ namespace TandemTrivia
             var round = questions.Take(10).ToList();
             int score = 0;
 
-            foreach (TriviaQuestion question in round)
+            for (int questionIndex = 0; questionIndex < round.Count; questionIndex++)
             {
+                var question = round[questionIndex];
                 Console.Clear();
+                Console.Write("[");
+                Console.Write(new string('#', questionIndex * 6));
+                Console.Write(new string(' ', (round.Count - questionIndex) * 6));
+                Console.WriteLine("]");
+                Console.WriteLine($"You are on Question {questionIndex + 1} out of {round.Count}");
                 Console.WriteLine(question.Question);
                 var multipleChoiceAnswers = new List<string>();
                 multipleChoiceAnswers.AddRange(question.Incorrect);
