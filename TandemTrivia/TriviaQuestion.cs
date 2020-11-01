@@ -14,7 +14,7 @@ namespace TandemTrivia
 
         public static List<TriviaQuestion> LoadFromFile(string fileName)
         {
-            // TODO: Some questions only seem to have < 3 incorrect answers, we should throw them out
+            // TODO: Validate that all four choices are unique
             return JArray.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\Apprentice_TandemFor400_Data.json"))
                 .Select(questionElement => new TriviaQuestion
                 {
@@ -22,6 +22,7 @@ namespace TandemTrivia
                     Correct = questionElement["correct"].ToString(),
                     Incorrect = questionElement["incorrect"].Select(elem => elem.ToString()).ToList()
                 })
+                .Where(question => question.Incorrect.Count == 3)
                 .ToList();
         }
     }

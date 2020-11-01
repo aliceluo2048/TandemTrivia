@@ -13,39 +13,31 @@ namespace TandemTrivia
             var round = new List<TriviaQuestion>();
             // to do filter valid questions first
             // to do shuffle
-            for (int i = 0; i <10 ; i++)
+            for (int i = 0; i < 10; i++)
             {
                 round.Add(questions[i]);
             }
+
+            Shuffle(round);
 
             int score = 0; 
 
             foreach (TriviaQuestion question in round)
             {
                 Console.WriteLine(question.Question);
-                var multipleChoiceAnswers = new List<MultipleChoiceAnswers>();
-                // no shuffling yet
-                // 3 will only work assuming there are 3 incorrect, otherwise will error out
-                for (int i = 0; i < 3; i++)
-                {
-                    multipleChoiceAnswers.Add(
-                    new MultipleChoiceAnswers
-                    {
-                        AnswerNumber = i + 1,
-                        Answer = question.Incorrect[i]
-                    });
-                };
-
-                multipleChoiceAnswers.Add(new MultipleChoiceAnswers
-                {
-                    AnswerNumber = 4,
-                    Answer = question.Correct
-                });
+                var multipleChoiceAnswers = new List<string>();
+                multipleChoiceAnswers.AddRange(question.Incorrect);
+                multipleChoiceAnswers.Add(question.Correct);
+                Shuffle(multipleChoiceAnswers);
          
-                multipleChoiceAnswers.ForEach(answer => Console.WriteLine($"{answer.AnswerNumber}" + " " + $"{answer.Answer}"));
+                for (int i = 0; i < multipleChoiceAnswers.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}" + " " + $"{multipleChoiceAnswers[i]}");
+                }
+
                 var userAnswer = ReadAnswer();
 
-                if (multipleChoiceAnswers[int.Parse(userAnswer) - 1].Answer == question.Correct)
+                if (multipleChoiceAnswers[int.Parse(userAnswer) - 1] == question.Correct)
                 {
                     Console.WriteLine("Correct");
                     score++;
@@ -82,10 +74,17 @@ namespace TandemTrivia
             return userAnswer;
         }
 
-        public class MultipleChoiceAnswers
+        // Fisher-Yates shuffle code from https://developerslogblog.wordpress.com/2020/02/04/how-to-shuffle-an-array/
+        static void Shuffle<T>(List<T> list)
         {
-            public int AnswerNumber { get; set; }
-            public string Answer { get; set; }
+            var random = new Random();
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int randomIndex = random.Next(0, i + 1);
+                T temp = list[i];
+                list[i] = list[randomIndex];
+                list[randomIndex] = temp;
+            }
         }
     }
 }
