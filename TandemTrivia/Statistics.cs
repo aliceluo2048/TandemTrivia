@@ -5,18 +5,17 @@ namespace TandemTrivia
 {
     public static class Statistics
     {
-        public static SessionDetails SessionDetails = new SessionDetails();
-
         public static void DisplayStats()
         {
             Console.Clear();
             Console.WriteLine("Stats");
-            var statsByUser = SessionDetails.DetailsByUser
-                .Select(kvp => new {
-                        Name = kvp.Key,
-                        SessionCount = kvp.Value.Count,
-                        AverageScore = kvp.Value.Average(detail => detail.Score)
-                    })
+            var statsByUser = SessionDetails.Instance.DetailsByUser
+                .Select(kvp => new
+                {
+                    Name = kvp.Key,
+                    SessionCount = kvp.Value.Count,
+                    AverageScore = kvp.Value.Average(detail => detail.Score)
+                })
                 .OrderByDescending(stats => stats.AverageScore)
                 .ToList();
 

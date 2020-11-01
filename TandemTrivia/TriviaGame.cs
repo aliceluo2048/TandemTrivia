@@ -59,8 +59,9 @@ namespace TandemTrivia
                 Util.PromptContinue();
             }
 
-            Statistics.SessionDetails.DetailsByUser.TryAdd(playerName, new List<UserSessionDetails>());
-            Statistics.SessionDetails.DetailsByUser[playerName].Add(new UserSessionDetails { Time = DateTime.Now, Score = score });
+            SessionDetails.Instance.DetailsByUser.TryAdd(playerName, new List<UserSessionDetails>());
+            SessionDetails.Instance.DetailsByUser[playerName].Add(new UserSessionDetails { Time = DateTime.Now, Score = score });
+            SessionDetails.SaveToFile();
 
             Console.Clear();
             Console.WriteLine($"You have finished a round of trivia. Your score is {score} out of 10");

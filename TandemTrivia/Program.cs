@@ -7,6 +7,8 @@ namespace TandemTrivia
     {
         public static void Main(string[] args)
         {
+            SessionDetails.LoadFromFile();
+
             while (true)
             {
                 Console.Clear();
