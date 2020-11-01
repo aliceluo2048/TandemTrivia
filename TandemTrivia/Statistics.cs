@@ -9,7 +9,7 @@ namespace TandemTrivia
         {
             Console.Clear();
             Console.WriteLine("Stats");
-            var statsByUser = SessionDetails.Instance.DetailsByUser
+            var statsByUser = SessionDetails.DetailsByUser
                 .Select(kvp => new
                 {
                     Name = kvp.Key,

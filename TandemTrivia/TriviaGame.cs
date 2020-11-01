@@ -59,8 +59,8 @@ namespace TandemTrivia
                 Util.PromptContinue();
             }
 
-            SessionDetails.Instance.DetailsByUser.TryAdd(playerName, new List<UserSessionDetails>());
-            SessionDetails.Instance.DetailsByUser[playerName].Add(new UserSessionDetails { Time = DateTime.Now, Score = score });
+            SessionDetails.DetailsByUser.TryAdd(playerName, new List<UserSessionDetails>());
+            SessionDetails.DetailsByUser[playerName].Add(new UserSessionDetails { Time = DateTime.Now, Score = score });
             SessionDetails.SaveToFile();
 
             Console.Clear();
