@@ -25,6 +25,7 @@ namespace TandemTrivia
             if (!File.Exists(FileName))
             {
                 DetailsByUser.Clear();
+
                 return;
             }
 

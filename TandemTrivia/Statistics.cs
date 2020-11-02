@@ -26,12 +26,15 @@ namespace TandemTrivia
                 })
                 .OrderByDescending(stats => stats.AverageScore)
                 .ToList();
+
             var sb = new StringBuilder();
+
             foreach (var stats in statsByUser)
             {
                 var averageScore = stats.AverageScore.ToString("F2");
                 sb.AppendLine($"{stats.Name} has an average score of {averageScore} over {stats.SessionCount} round(s)");
             }
+
             return sb.ToString();
         }
     }

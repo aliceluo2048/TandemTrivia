@@ -44,8 +44,8 @@ namespace TandemTrivia
 
             var gameModeOptions = new List<string>
             {
-                "I'm a solo player",
-                "I'm playing with a friend"
+                "I'm a solo player!",
+                "I'm playing with a friend!"
             };
 
             var playerCount = Util.ReadAnswer(gameModeOptions);
@@ -106,12 +106,12 @@ namespace TandemTrivia
 
             if (multipleChoiceAnswers[userAnswer.Value - 1] == question.Correct)
             {
-                Console.WriteLine("Correct");
+                Console.WriteLine("Correct!");
                 player.Score++;
             }
             else
             {
-                Console.WriteLine($"Incorrect! {question.Correct} was the correct answer");
+                Console.WriteLine($"Incorrect! {question.Correct} is the correct answer");
             }
 
             Util.PromptContinue();
@@ -137,7 +137,7 @@ namespace TandemTrivia
             }
             else
             {
-                Console.WriteLine($"You have finished a round of trivia.");
+                Console.WriteLine($"You have finished a round of trivia");
 
                 foreach (var player in players)
                 {
