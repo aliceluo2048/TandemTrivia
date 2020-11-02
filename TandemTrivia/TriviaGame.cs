@@ -138,7 +138,7 @@ namespace TandemTrivia
             else
             {
                 Console.WriteLine($"You have finished a round of trivia.");
-                
+
                 foreach (var player in players)
                 {
                     Console.WriteLine($"{player.Name}'s score is {player.Score} out of 10");

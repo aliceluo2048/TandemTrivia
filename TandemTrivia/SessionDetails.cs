@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UserToSessionDetails = System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<TandemTrivia.UserSessionDetails>>;
 
 namespace TandemTrivia
 {
@@ -16,7 +16,7 @@ namespace TandemTrivia
 
     public static class SessionDetails
     {
-        public static Dictionary<string, List<UserSessionDetails>> DetailsByUser { get; set; } = new Dictionary<string, List<UserSessionDetails>>();
+        public static UserToSessionDetails DetailsByUser { get; set; } = new UserToSessionDetails();
 
         private static string FileName = AppDomain.CurrentDomain.BaseDirectory + "\\sessionDetails.json";
 
@@ -27,7 +27,8 @@ namespace TandemTrivia
                 DetailsByUser.Clear();
                 return;
             }
-            DetailsByUser = JsonConvert.DeserializeObject<Dictionary<string, List<UserSessionDetails>>>(File.ReadAllText(FileName));
+
+            DetailsByUser = JsonConvert.DeserializeObject<UserToSessionDetails>(File.ReadAllText(FileName));
         }
 
         public static void SaveToFile()

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
+using UserToSessionDetails = System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<TandemTrivia.UserSessionDetails>>;
 
 namespace TandemTrivia
 {
@@ -9,7 +11,13 @@ namespace TandemTrivia
         {
             Console.Clear();
             Console.WriteLine("Stats");
-            var statsByUser = SessionDetails.DetailsByUser
+            Console.Write(GetStatsText(SessionDetails.DetailsByUser));
+            Util.PromptContinue();
+        }
+
+        public static string GetStatsText(UserToSessionDetails detailsByUser)
+        {
+            var statsByUser = detailsByUser
                 .Select(kvp => new
                 {
                     Name = kvp.Key,
@@ -18,14 +26,13 @@ namespace TandemTrivia
                 })
                 .OrderByDescending(stats => stats.AverageScore)
                 .ToList();
-
+            var sb = new StringBuilder();
             foreach (var stats in statsByUser)
             {
                 var averageScore = stats.AverageScore.ToString("F2");
-                Console.WriteLine($"{stats.Name} has an average score of {averageScore} over {stats.SessionCount} round(s)");
+                sb.AppendLine($"{stats.Name} has an average score of {averageScore} over {stats.SessionCount} round(s)");
             }
-
-            Util.PromptContinue();
+            return sb.ToString();
         }
     }
 }

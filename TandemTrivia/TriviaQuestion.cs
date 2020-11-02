@@ -12,18 +12,20 @@ namespace TandemTrivia
         [JsonProperty("question")]
         public string Question { get; set; }
         [JsonProperty("incorrect")]
-        public List<string> Incorrect { get; set; }
+        public List<string> Incorrect { get; set; } = new List<string>();
         [JsonProperty("correct")]
         public string Correct { get; set; }
 
-        private int CountUniqueAnswers()
+        public int CountUniqueAnswers()
         {
             var answers = new HashSet<string>();
-            foreach(var answer in Incorrect)
+
+            foreach (var answer in Incorrect)
             {
                 answers.Add(answer);
             }
             answers.Add(Correct);
+
             return answers.Count;
         }
 

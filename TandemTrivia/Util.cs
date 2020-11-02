@@ -65,6 +65,10 @@ namespace TandemTrivia
 
         public static string GetProgressBarText(int progressIndex, int progressTotal)
         {
+            if (progressIndex > progressTotal)
+            {
+                throw new ArgumentException("progressIndex cannot be greater than progressTotal");
+            }
             return "["
                 + new string('#', progressIndex * 6)
                 + new string(' ', (progressTotal - progressIndex) * 6)
